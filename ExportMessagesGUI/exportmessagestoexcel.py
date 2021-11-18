@@ -8,9 +8,9 @@ import pandas as pd
 import pytz
 
 # setting authentication variables
-accountsid = "f79d93e3-faf0-44a7-95e1-07f3aedc6c8d"
-token = "PT789a1a9399a86da5ad240c626737bdc4fcf93e1f7baa55d0"
-space = "https://kmageee.signalwire.com"
+accountsid = "your project id"
+token = "your token"
+space = "https://<your space url>.signalwire.com"
 client = signalwire_client(accountsid, token, signalwire_space_url=space)
 
 def getnums():
