@@ -7,6 +7,9 @@ import csv
 
 #modified from https://developer.signalwire.com/apis/docs/creating-a-publically-exposed-webhook-and-configure-it-to-your-incoming-number
 
+#this script listens for incoming messages and adds/deletes them from a csv in real time
+#could be used for managing mailing list subscription
+
 # Input User Authentication into Client
 ProjectID = "Your Project ID"
 AuthToken = "Your Account Token"
