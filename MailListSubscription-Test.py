@@ -9,6 +9,7 @@ import csv
 
 #this script listens for incoming messages and adds/deletes them from a csv in real time
 #could be used for managing mailing list subscription
+#Uses 'testing.csv' in current directory
 
 # Input User Authentication into Client
 ProjectID = "Your Project ID"
