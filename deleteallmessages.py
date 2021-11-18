@@ -2,6 +2,8 @@ import requests
 import json
 import base64
 
+#WARNING: This will delete ALL LAML message logs.
+
 #sets up credentials
 accountsid = ""
 token = ""
