@@ -1,0 +1,3 @@
+This script listens for incoming messages and adds/removes them from a list of dictionaries.
+Each dictionary is written to a .csv for further use.
+Testing.csv is the default support file.
