@@ -7,6 +7,7 @@ import os
 # pyjokes handles our jokes
 import pyjokes
 
+
 class CustomConsumer(Consumer):
     def setup(self):
         # holds our environment variables
@@ -84,7 +85,7 @@ class CustomConsumer(Consumer):
                 if call.from_number not in self.lists:
                     self.mapper="0"
                     result = await call.prompt_tts(prompt_type="digits",
-                                                   text="Press 1 to hear a funny joke, Press 2 to have a joke texted to you, Press 3 if you're no fun.",
+                                                   text="Press 1 to hear a funny joke, Press 2 to have a joke texted to you, Press 3 if you're no fun. Press 4 to end the call.",
                                                    digits_max=1)
                     # if our caller wants to hear a joke, we get one using pyjokes and play it over text-to-speech, then hang up.
                     if result.successful and result.result == "1":
@@ -113,10 +114,16 @@ class CustomConsumer(Consumer):
                         self.menuloop = "1"
                         self.mapper = "1"
                         await call.hangup()
-
+                    if result.successful and result.result == "4":
+                        self.menuloop="1"
+                        self.mapper = "1"
+                        await call.hangup()
+                    # catches bad inputs and returns us to the menu
                     if self.mapper != "1":
                         await call.play_tts(text="Sorry. I'm still a new AI, and didn't understand your request. Try again.")
                         self.menuloop = "0"
+
+
 
 # Runs the consumer
 consumer = CustomConsumer()
