@@ -7,7 +7,6 @@ import os
 # pyjokes handles our jokes
 import pyjokes
 
-
 class CustomConsumer(Consumer):
     def setup(self):
         # holds our environment variables
