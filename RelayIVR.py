@@ -6,7 +6,7 @@ import pyjokes
 
 class CustomConsumer(Consumer):
     def setup(self):
-        #holds our environment variables
+        # holds our environment variables
         self.project = os.environ['ProjectID']
         self.token = os.environ['AuthToken']
         self.url = os.environ['SpaceUrl']
@@ -15,15 +15,20 @@ class CustomConsumer(Consumer):
         self.contexts = ['office']
 
         # this list holds all of our no-fun numbers
-        self.lists=[]
+        self.lists=['+18043632795']
 
         # this dictionary is for our 'managers' to forward no-fun customers to.
         self.callthrough=[{'to_number':'+18045472366', 'timeout': 10}]
+
+        # catches bad inputs
+        self.mapper="0"
 
     # function listens for incoming calls
     async def on_incoming_call(self, call):
         result = await call.answer()
         if result.successful:
+            # resets map with each call
+            self.mapper="0"
             print("Checking no fun database.. ")
             # checks if our caller is on the no-fun list
             if call.from_number in self.lists:
@@ -35,6 +40,8 @@ class CustomConsumer(Consumer):
                 # if our caller is nice they get taken off the list.
                 if result.successful and result.result=="1":
                     await call.play_tts(text="Okay fine, I'll give you another chance.")
+                    # sets mapper to one so we can proceed to our joke menu
+                    self.mapper = "1"
                     for object in self.lists:
                         if call.from_number == object:
                             self.lists.remove(object)
@@ -53,10 +60,11 @@ class CustomConsumer(Consumer):
                     else:
                         print("Call Failed")
                         await call.hangup()
-                # if our no-fun caller can't press buttons correctly we also hang up on them
-                else:
-                    await call.play_tts(text="What a shame. I have nothing more to say to you. Goodbye.")
+
+                if self.mapper != "1":
+                    print("weird")
                     await call.hangup()
+
             # if our caller is not on the list of no-fun callers we ask if they want to hear a joke.
             if call.from_number not in self.lists:
                 result = await call.prompt_tts(prompt_type="digits",
