@@ -33,6 +33,7 @@ class CustomConsumer(Consumer):
     # function listens for incoming calls
     async def on_incoming_call(self, call):
         result = await call.answer()
+        # debugger print(call.state)
         # checks if call connected
         if result.successful:
             # resets map and menu loop with each call
@@ -122,6 +123,9 @@ class CustomConsumer(Consumer):
                     if self.mapper != "1":
                         await call.play_tts(text="Sorry. I'm still a new AI, and didn't understand your request. Try again.")
                         self.menuloop = "0"
+                #ends the while loop in case of dropped calls
+                if call.state != "answered":
+                    self.menuloop="1"
 
 
 
